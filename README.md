@@ -16,7 +16,7 @@ This is the sample application written in Blazor WebAssembly that communicates w
 1. Run the following command to login to Azure:
 
     ```bash
-    azd login --use-device-code=false
+    azd login
     ```
 
    > If you're running this code on GitHub Codespaces, run the following command instead:
@@ -37,6 +37,12 @@ This is the sample application written in Blazor WebAssembly that communicates w
     azd init
     ```
 
+1. Run the following command to integrate with GitHub Actions workflow:
+
+    ```bash
+    azd pipeline config
+    ```
+
 1. Update your `.env` file by adding the following lines:
 
     ```bash
@@ -47,5 +53,5 @@ This is the sample application written in Blazor WebAssembly that communicates w
 1. Run the following command to provision all the apps to Azure:
 
     ```bash
-    azd up
+    azd provision
     ```

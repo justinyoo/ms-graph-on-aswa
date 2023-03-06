@@ -1,0 +1,20 @@
+@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4 text-end" hidden="@IsLoginHidden">
+            <a href="/login" @onclick="OnLoggedInAsync">Login</a>
+        </div>
+        <div class="top-row px-4 text-end" hidden="@IsLogoutHidden">
+            <span class="px-4">@DisplayName</span> | <a href="/logout" @onclick="OnLoggedOutAsync">Logout</a>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </main>
+</div>
