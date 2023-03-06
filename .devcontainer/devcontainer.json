@@ -5,7 +5,7 @@
     "dockerfile": "./Dockerfile",
     "context": ".",
     "args": {
-      "VARIANT": "6.0-jammy"
+      "VARIANT": "7.0"
       // Use this only if you need Razor support, until OmniSharp supports .NET 6 properly
       // "VARIANT": "6.0-focal"
     }
@@ -25,21 +25,22 @@
 
   "features": {
     // Uncomment the below to install Azure CLI
-    // "ghcr.io/devcontainers/features/azure-cli:1": {
-    //   "version": "latest"
-    // },
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+      "version": "latest",
+      "extensions": "account,alias,deploy-to-azure,functionapp,subscription,webapp"
+    },
 
     // Uncomment the below to install GitHub CLI
-    // "ghcr.io/devcontainers/features/github-cli:1": {
-    //   "version": "latest"
-    // },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
 
     // Uncomment the below to install node.js
-    // "ghcr.io/devcontainers/features/node:1": {
-    //   "version": "lts",
-    //   "nodeGypDependencies": true,
-    //   "nvmInstallPath": "/usr/local/share/nvm"
-    // },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts",
+      "nodeGypDependencies": true,
+      "nvmInstallPath": "/usr/local/share/nvm"
+    },
 
     // Install common utilities
     "ghcr.io/devcontainers/features/common-utils:1": {
@@ -63,33 +64,33 @@
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
         // Recommended extensions - GitHub
-        // "cschleiden.vscode-github-actions",
-        // "GitHub.vscode-pull-request-github",
+        "cschleiden.vscode-github-actions",
+        "GitHub.vscode-pull-request-github",
 
         // Recommended extensions - Azure
-        // "Azurite.azurite",
-        // "ms-azuretools.vscode-bicep",
+        "Azurite.azurite",
+        "ms-azuretools.vscode-bicep",
 
         // Recommended extensions - Collaboration
-        // "eamodio.gitlens",
-        // "EditorConfig.EditorConfig",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig",
         // "MS-vsliveshare.vsliveshare-pack",
-        // "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker",
 
         // Recommended extensions - .NET
-        // "Fudge.auto-using",
-        // "jongrant.csharpsortusings",
-        // "kreativ-software.csharpextensions",
+        "Fudge.auto-using",
+        "jongrant.csharpsortusings",
+        "kreativ-software.csharpextensions",
 
         // Recommended extensions - Power Platform
         // "microsoft-IsvExpTools.powerplatform-vscode",
 
         // Recommended extensions - Markdown
-        // "bierner.github-markdown-preview",
-        // "DavidAnson.vscode-markdownlint",
-        // "docsmsft.docs-linting",
-        // "johnpapa.read-time",
-        // "yzhang.markdown-all-in-one",
+        "bierner.github-markdown-preview",
+        "DavidAnson.vscode-markdownlint",
+        "docsmsft.docs-linting",
+        "johnpapa.read-time",
+        "yzhang.markdown-all-in-one",
 
         // Required extensions
         "GitHub.copilot",
@@ -115,8 +116,8 @@
         "editor.minimap.enabled": false,
 
         // Uncomment if you want to disable the welcome page of GitLens
-        // "gitlens.showWelcomeOnInstall": false,
-        // "gitlens.showWhatsNewAfterUpgrades": false,
+        "gitlens.showWelcomeOnInstall": false,
+        "gitlens.showWhatsNewAfterUpgrades": false,
 
         // Uncomment if you prefer the light colour theme
         // "workbench.colorTheme": "Default Light+",
