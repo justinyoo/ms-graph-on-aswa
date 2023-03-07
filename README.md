@@ -1,13 +1,13 @@
 # Microsoft Graph on Azure Static Web Apps with Blazor WebAssembly #
 
-This is the sample application written in Blazor WebAssembly that communicates with Microsoft Graph, running on Azure Static Web Apps.
+This is the sample application written in [Blazor WebAssembly](https://learn.microsoft.com/aspnet/core/blazor?WT.mc_id=dotnet-91112-juyoo) that communicates with [Microsoft Graph](https://learn.microsoft.com/graph/overview?WT.mc_id=dotnet-91112-juyoo), running on [Azure Static Web Apps](https://learn.microsoft.com/azure/static-web-apps/overview?WT.mc_id=dotnet-91112-juyoo).
 
 
 ## Prerequisites ##
 
-* Azure subscription: [Get a free Azure subscription today](https://azure.microsoft.com/free)
+* Azure subscription: [Get a free Azure subscription today](https://azure.microsoft.com/free?WT.mc_id=dotnet-91112-juyoo)
 * GitHub account: [Get free sign-up today](http://github.com/signup)
-* [Visual Studio](https://visualstudio.microsoft.com) or [Visual Studio Code](https://code.visualstudio.com)
+* [Visual Studio](https://visualstudio.microsoft.com?WT.mc_id=dotnet-91112-juyoo) or [Visual Studio Code](https://code.visualstudio.com?WT.mc_id=dotnet-91112-juyoo)
 
 
 ## Getting Started ##
@@ -111,3 +111,10 @@ If you want to deploy the app from your local machine or GitHub Codespace instan
       -i src/FunctionApp/bin/Release/net7.0/publish \
       --env default
    ```
+
+
+## Try More? ##
+
+* [Build ASP.NET App with Microsoft Graph](https://learn.microsoft.com/training/paths/m365-msgraph-dotnet-core-scenarios?WT.mc_id=dotnet-91112-juyoo)
+* [Build Web App with Blazor](https://learn.microsoft.com/training/paths/build-web-apps-with-blazor?WT.mc_id=dotnet-91112-juyoo)
+
