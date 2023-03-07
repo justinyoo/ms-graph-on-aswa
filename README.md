@@ -59,11 +59,13 @@ This is the sample application written in [Blazor WebAssembly](https://learn.mic
 
 ### App Deployment ###
 
-1. Register an app to Azure Active Directory and add the following values to GitHub repository secrets:
+1. [Register an app to Azure Active Directory](https://learn.microsoft.com/azure/active-directory/develop/quickstart-register-app?WT.mc_id=dotnet-91112-juyoo) and add the following values to GitHub repository secrets:
 
    * `GRAPH_CLIENT_ID`
    * `GRAPH_CLIENT_SECRET`
    * `GRAPH_TENANT_ID`
+
+   > It would be better to register this app on a different tenant from the tenant where the app is deployed.
 
 
 #### GitHub Actions Workflow ####
