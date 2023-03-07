@@ -1,0 +1,76 @@
+name: 'On Called for Doing Build & Test & Upload'
+
+on:
+  workflow_call:
+    inputs:
+      artifact_name_app:
+        type: string
+        required: false
+        description: Artifact name for app
+        default: 'app'
+      artifact_name_api:
+        type: string
+        required: false
+        description: Artifact name for API
+        default: 'api'
+
+jobs:
+  build_test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.x
+
+    - name: Restore NuGet packages
+      shell: bash
+      run: |
+        dotnet restore
+
+    - name: Build solution
+      shell: bash
+      run: |
+        dotnet build -c Release
+
+    - name: Test solution
+      shell: bash
+      run: |
+        dotnet test -c Release
+
+    - name: Create artifacts
+      shell: bash
+      run: |
+        dotnet publish -c Release
+
+    - name: Add app paths to env
+      shell: pwsh
+      run: |
+        $appPath = "src/BlazorApp/bin/Release/net7.0/publish"
+
+        echo "APP_PATH=$appPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+
+    - name: Add API paths to env
+      shell: pwsh
+      run: |
+        $apiPath = "src/FunctionApp/bin/Release/net7.0/publish"
+
+        echo "API_PATH=$appPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+
+    - name: Upload app artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.artifact_name_app }}
+        path: "${{ github.workspace }}/${{ env.APP_PATH }}"
+        retention-days: 3
+
+    - name: Upload API artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.artifact_name_api }}
+        path: "${{ github.workspace }}/${{ env.API_PATH }}"
+        retention-days: 3

@@ -1,0 +1,33 @@
+name: 'Azure Dev'
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+  workflow_dispatch:
+
+# permissions: write-all
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  call_build_test_upload:
+    uses: ./.github/workflows/workflow_call_build_test_upload.yaml
+    secrets: inherit
+    with:
+      artifact_name_app: 'app'
+      artifact_name_api: 'api'
+
+  call_deploy_sttapp:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/workflow_call_deploy_sttapp.yaml
+    needs:
+    - call_build_test_upload
+    secrets: inherit
+    with:
+      artifact_name_app: 'app'
+      artifact_name_api: 'api'

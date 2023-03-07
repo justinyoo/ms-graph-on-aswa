@@ -13,6 +13,7 @@ This is the sample application written in Blazor WebAssembly that communicates w
 ## Getting Started ##
 
 1. Fork this repository to your account.
+1. Open a GitHub Codespace instance or clone the forked repository to your local computer.
 1. Run the following command to login to Azure:
 
     ```bash
@@ -25,7 +26,7 @@ This is the sample application written in Blazor WebAssembly that communicates w
    > azd login --use-device-code=false
    > ```
    > 
-   > Then, copy the URL from the browser's location bar, open a new terminal and paste it with the `curl` command like:
+   > It opens a new web browser and get an error. Copy the URL from the browser's location bar, open a new terminal and paste it with the `curl` command like:
    > 
    > ```bash
    > curl {{COPIED_URL}}
@@ -41,13 +42,6 @@ This is the sample application written in Blazor WebAssembly that communicates w
 
     ```bash
     azd pipeline config
-    ```
-
-1. Update your `.env` file by adding the following lines:
-
-    ```bash
-    GITHUB_USERNAME="{{YOUR_GITHUB_USERNAME}}"
-    GITHUB_REPOSITORY_NAME="ms-graph-on-aswa"
     ```
 
 1. Run the following command to provision all the apps to Azure:
