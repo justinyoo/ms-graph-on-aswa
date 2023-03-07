@@ -68,3 +68,13 @@ jobs:
         api_location: "${{ github.workspace }}/published/${{ inputs.artifact_name_api }}" # Api source code path - optional
         output_location: "" # Built app content directory - optional
         ###### End of Repository/Build Configurations ######
+
+    - name: Update app settings on SWA
+      shell: bash
+      run: |
+        appsettings=$(az staticwebapp appsettings set \
+          -g $AZURE_RESOURCE_GROUP_NAME \
+          -n $AZURE_STTAPP_NAME \
+          --setting-names MsGraph__TenantId="${{ secrets.GRAPH_TENANT_ID }}" \
+                          MsGraph__ClientId="${{ secrets.GRAPH_CLIENT_ID }}" \
+                          MsGraph__ClientSecret="${{ secrets.GRAPH_CLIENT_SECRET }}")

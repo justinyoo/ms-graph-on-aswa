@@ -12,8 +12,14 @@ This is the sample application written in Blazor WebAssembly that communicates w
 
 ## Getting Started ##
 
+### Housekeeping ###
+
 1. Fork this repository to your account.
 1. Open a GitHub Codespace instance or clone the forked repository to your local computer.
+
+
+### Resource Provisioning ###
+
 1. Run the following command to login to Azure:
 
     ```bash
@@ -49,3 +55,51 @@ This is the sample application written in Blazor WebAssembly that communicates w
     ```bash
     azd provision
     ```
+
+
+### App Deployment ###
+
+1. Register an app to Azure Active Directory and add the following values to GitHub repository secrets:
+
+   * `GRAPH_CLIENT_ID`
+   * `GRAPH_CLIENT_SECRET`
+   * `GRAPH_TENANT_ID`
+
+1. Build artifacts
+
+    ```bash
+    swa build
+    ```
+
+1. Login to Azure
+
+    ```bash
+    az login
+    ```
+
+   > If you're running this code on GitHub Codespaces, it opens a new web browser and get an error. Copy the URL from the browser's location bar, open a new terminal and paste it with the `curl` command like:
+   > 
+   > ```bash
+   > curl {{COPIED_URL}}
+   > ```
+
+
+1. Get the deployment key from the Azure Static Web App instance. `$AZURE_ENV_NAME` is what you have set the value through `azd init`.
+
+    ```bash
+    SWA_TOKEN=$(az staticwebapp secrets list \
+      -g rg-$AZURE_ENV_NAME \
+      -n sttapp-$AZURE_ENV_NAME \
+      --query "properties.apiKey" -o tsv)
+    ```
+
+1. Run the following command to deploy
+
+   ```bash
+    swa deploy \
+      -d $SWA_TOKEN \
+      -i src/FunctionApp/bin/Release/net7.0/publish \
+      --env default
+   ```
+
+Alternatively, push your change to the repository, it will automatically trigger a GitHub Actions workflow to deploy the app.

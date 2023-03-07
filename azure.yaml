@@ -5,7 +5,7 @@ name: ms-graph-on-aswa
 infra:
   provider: "bicep"
   path: "infra"
-  module: "main.bicep"
+  module: "main"
 
 pipeline:
   provider: "github"
