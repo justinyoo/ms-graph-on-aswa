@@ -59,7 +59,7 @@ jobs:
       run: |
         $apiPath = "src/FunctionApp/bin/Release/net7.0/publish"
 
-        echo "API_PATH=$appPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+        echo "API_PATH=$apiPath" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
 
     - name: Upload app artifact
       uses: actions/upload-artifact@v2
