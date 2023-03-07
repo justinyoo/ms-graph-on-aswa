@@ -33,6 +33,18 @@ jobs:
     - name: Restructure artifact directories
       shell: bash
       run: |
+        mkdir ${{ github.workspace }}/src
+        mkdir ${{ github.workspace }}/src/BlazorApp
+        mkdir ${{ github.workspace }}/src/BlazorApp/bin
+        mkdir ${{ github.workspace }}/src/BlazorApp/bin/wwwroot
+
+        mkdir ${{ github.workspace }}/src
+        mkdir ${{ github.workspace }}/src/FunctionApp
+        mkdir ${{ github.workspace }}/src/FunctionApp/bin
+        mkdir ${{ github.workspace }}/src/FunctionApp/bin/Release
+        mkdir ${{ github.workspace }}/src/FunctionApp/bin/Release/net7.0
+        mkdir ${{ github.workspace }}/src/FunctionApp/bin/Release/net7.0/publish
+
         mv ${{ github.workspace }}/published/${{ inputs.artifact_name_app }} ${{ github.workspace }}/src/BlazorApp/bin/wwwroot
         mv ${{ github.workspace }}/published/${{ inputs.artifact_name_api }} ${{ github.workspace }}/src/FunctionApp/bin/Release/net7.0/publish
 
