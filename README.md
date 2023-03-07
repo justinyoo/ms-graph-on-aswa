@@ -65,6 +65,16 @@ This is the sample application written in Blazor WebAssembly that communicates w
    * `GRAPH_CLIENT_SECRET`
    * `GRAPH_TENANT_ID`
 
+
+#### GitHub Actions Workflow ####
+
+1. Push your code changes to the repository, and it will automatically trigger the GitHub Actions workflow.
+
+
+#### Manual Deployment ####
+
+If you want to deploy the app from your local machine or GitHub Codespace instance, follow the steps below.
+
 1. Build artifacts
 
     ```bash
@@ -101,5 +111,3 @@ This is the sample application written in Blazor WebAssembly that communicates w
       -i src/FunctionApp/bin/Release/net7.0/publish \
       --env default
    ```
-
-Alternatively, push your change to the repository, it will automatically trigger a GitHub Actions workflow to deploy the app.
