@@ -4,30 +4,82 @@ on:
   push:
     branches:
     - main
-  pull_request:
-    branches:
-    - main
-  workflow_dispatch:
 
-# permissions: write-all
-permissions:
-  id-token: write
-  contents: read
+env:
+  AZURE_RESOURCE_GROUP_NAME: 'rg-${{ secrets.AZURE_ENV_NAME }}'
+  AZURE_STTAPP_NAME: 'sttapp-${{ secrets.AZURE_ENV_NAME }}'
 
 jobs:
-  call_build_test_upload:
-    uses: ./.github/workflows/workflow_call_build_test_upload.yaml
-    secrets: inherit
-    with:
-      artifact_name_app: 'app'
-      artifact_name_api: 'api'
+  build_test_deploy:
+    runs-on: ubuntu-latest
 
-  # call_deploy_sttapp:
-  #   if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-  #   uses: ./.github/workflows/workflow_call_deploy_sttapp.yaml
-  #   needs:
-  #   - call_build_test_upload
-  #   secrets: inherit
-  #   with:
-  #     artifact_name_app: 'app'
-  #     artifact_name_api: 'api'
+    steps:
+    - name: Checkout the repo
+      uses: actions/checkout@v2
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.x
+
+    - name: Install SWA CLI
+      shell: bash
+      run: |
+        npm install -g @azure/static-web-apps-cli
+
+    - name: Restore NuGet packages
+      shell: bash
+      run: |
+        dotnet restore
+
+    - name: Build solution
+      shell: bash
+      run: |
+        dotnet build -c Release
+
+    - name: Test solution
+      shell: bash
+      run: |
+        dotnet test -c Release
+
+    - name: Create artifacts
+      shell: bash
+      run: |
+        swa build
+
+    - name: Login to Azure
+      uses: Azure/login@v1
+      with:
+        # creds: ${{ secrets.AZURE_CREDENTIALS }}
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Get SWA token
+      shell: bash
+      run: |
+        swa_token=$(az staticwebapp secrets list \
+          -g $AZURE_RESOURCE_GROUP_NAME \
+          -n $AZURE_STTAPP_NAME \
+          --query "properties.apiKey" -o tsv)
+
+        echo "::add-mask::$swa_token"
+        echo "SWA_TOKEN=$swa_token" >> $GITHUB_ENV
+
+    - name: Deploy SWA to Azure
+      shell: bash
+      run: |
+        swa deploy \
+            -d ${{ env.SWA_TOKEN }} \
+            -i src/FunctionApp/bin/Release/net7.0/publish \
+            --env default
+
+    - name: Update app settings on SWA
+      shell: bash
+      run: |
+        appsettings=$(az staticwebapp appsettings set \
+          -g $AZURE_RESOURCE_GROUP_NAME \
+          -n $AZURE_STTAPP_NAME \
+          --setting-names MsGraph__TenantId="${{ secrets.GRAPH_TENANT_ID }}" \
+                          MsGraph__ClientId="${{ secrets.GRAPH_CLIENT_ID }}" \
+                          MsGraph__ClientSecret="${{ secrets.GRAPH_CLIENT_SECRET }}")
