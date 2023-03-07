@@ -9,6 +9,11 @@ env:
   AZURE_RESOURCE_GROUP_NAME: 'rg-${{ secrets.AZURE_ENV_NAME }}'
   AZURE_STTAPP_NAME: 'sttapp-${{ secrets.AZURE_ENV_NAME }}'
 
+# permissions: write-all
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build_test_deploy:
     runs-on: ubuntu-latest
